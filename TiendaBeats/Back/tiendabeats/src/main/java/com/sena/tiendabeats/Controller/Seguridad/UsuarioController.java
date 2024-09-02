@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.tiendabeats.Controller.ABaseController;
+import com.sena.tiendabeats.Dto.ILoginDto;
 import com.sena.tiendabeats.Dto.LoginDto;
 import com.sena.tiendabeats.Entity.Seguridad.Usuario;
 import com.sena.tiendabeats.IService.Seguridad.IUsuarioService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @CrossOrigin("*")
 @RestController
@@ -23,12 +25,12 @@ public class UsuarioController extends ABaseController<Usuario, IUsuarioService>
     }
 
     // ...
-    @GetMapping("/login")
-    public ResponseEntity<List<LoginDto>> login(@RequestParam String username, @RequestParam String password) {
+    @PostMapping("/login")
+    public ResponseEntity<List<ILoginDto>> login(@RequestBody LoginDto login) {
         try {
-            return ResponseEntity.ok(service.Login(username, password));
+            return ResponseEntity.ok(service.Login(login.getUsername(), login.getPassword()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.internalServerError().body(null);
         }
     }
 

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.sena.tiendabeats.Dto.LoginDto;
+import com.sena.tiendabeats.Dto.ILoginDto;
 import com.sena.tiendabeats.Entity.Seguridad.Usuario;
 import com.sena.tiendabeats.IRepository.IBaseRepository;
 
@@ -26,6 +26,6 @@ public interface IUsuarioRepository extends IBaseRepository<Usuario, Long> {
             "       AND (u.password LIKE CONCAT('%', :password, '%')) " + 
             "   GROUP BY v.nombre " + 
             "   ORDER BY m.nombre ASC ;", nativeQuery = true)
-    List<LoginDto> getLogin(@Param("username") String username,
+    List<ILoginDto> getLogin(@Param("username") String username,
                         @Param("password") String password);
 }
